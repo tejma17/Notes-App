@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    tools:context=".Home">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_margin="20dp"
+        android:fontFamily="@font/baloo"
+        android:text="Notes"
+        android:textColor="@color/set_text"
+        android:textSize="29sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mode"
+        android:layout_width="50dp"
+        app:iconGravity="end"
+        app:iconTint="@color/set_text"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:fontFamily="@font/baloo"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="10dp"/>
+
+    <LinearLayout
+        android:id="@+id/search_arent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginVertical="10dp"
+        android:layout_marginHorizontal="15dp"
+        android:layout_below="@id/textView" >
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_weight="4"
+            android:backgroundTint="@color/tint"
+            android:background="@drawable/oval_back"
+            android:drawableLeft="@drawable/ic_round_search_24"
+            android:hint="Search your notes"
+            android:drawablePadding="10dp" />
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list"
+        android:dividerHeight="8dp"
+        android:divider="@color/transparent"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_arent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_round_add_24"
+        android:transitionName="add_button"
+        android:backgroundTint="@color/colorPrimary"
+        android:layout_margin="20dp"
+        app:fabSize="auto" />
+
+
+</RelativeLayout>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/back"
+    android:transitionName="add_button"
+    tools:context=".AddNOte">
+
+    <EditText
+        android:id="@+id/newNote"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/back"
+        android:gravity="top"
+        android:backgroundTint="@color/back"
+        android:transitionName="note_open"
+        android:textColor="@color/set_text"
+        android:fontFamily="@font/convergence"
+        android:hint="Add your note"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:padding="20dp"
+        android:singleLine="false"
+        android:textSize="17sp" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/ic_round_arrow_back_ios_24" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="20dp"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/ic_round_share_24" />
+</RelativeLayout>
