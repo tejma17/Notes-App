@@ -21,7 +21,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class AddNOte extends AppCompatActivity {
+public class AddNote extends AppCompatActivity {
 
     EditText note;
     Button done, back;

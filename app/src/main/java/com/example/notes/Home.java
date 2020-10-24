@@ -2,6 +2,10 @@ package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.app.ActivityOptions;
 import android.app.AlertDialog;
@@ -18,10 +22,8 @@ import android.util.Pair;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,18 +35,18 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-public class Home extends AppCompatActivity {
+public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNoteListener {
 
     FloatingActionButton add;
     SharedPreferences sharedPreferences;
-    ListView list;
+    private RecyclerView list;
     private MaterialButton toggle;
     EditText search;
     LinearLayout search_layout;
     TextView cancel;
     private boolean isNight;
-    ListViewAdapter arrayAdapter;
-    public static ArrayList<Notes> notes = new ArrayList<>();
+    RecyclerViewAdapter recyclerViewAdapter;
+    public ArrayList<Notes> notes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,10 @@ public class Home extends AppCompatActivity {
         }
 
         initElements();
-        arrayAdapter = new ListViewAdapter(getApplicationContext(), R.layout.layout, notes);
-        list.setAdapter(arrayAdapter);
+        recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), R.layout.recycler_parent, notes, this);
+        list.setAdapter(recyclerViewAdapter);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        list.setLayoutManager(staggeredGridLayoutManager);
 
         if(!isNight){
             toggle.setIconResource(R.drawable.ic_round_bedtime_24);
@@ -111,46 +115,10 @@ public class Home extends AppCompatActivity {
                 Pair[] pairs = new Pair[1];
                 pairs[0] = new Pair<View, String>(add, "add_button");
                 ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Home.this, pairs);
-                startActivity(new Intent(getApplicationContext(), AddNOte.class), options.toBundle());
+                startActivity(new Intent(getApplicationContext(), AddNote.class), options.toBundle());
             }
         });
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getApplicationContext(), AddNOte.class);
-                Pair[] pairs = new Pair[1];
-                LinearLayout tv = (LinearLayout) view;
-                pairs[0] = new Pair<View, String>(tv, "note_open");
-                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Home.this, pairs);
-                intent.putExtra("noteId", position);
-                startActivity(intent, options.toBundle());
-            }
-        });
-
-
-        list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int pos, long id) {
-                final int position = pos;
-                AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
-                builder.setTitle("Delete");
-                builder.setMessage("Delete this note permanently?");
-                builder.setPositiveButton("Yes",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                notes.remove(position);
-                                arrayAdapter.notifyDataSetChanged();
-                                String connectionsJSONString = new Gson().toJson(notes);
-                                sharedPreferences.edit().putString("Name", connectionsJSONString).apply();
-                                Toast.makeText(Home.this, "Note deleted", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                builder.setNegativeButton("No", null);
-                builder.show();
-                return true;
-            }
-        });
 
         search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -161,11 +129,11 @@ public class Home extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(TextUtils.isEmpty(s)) {
-                    arrayAdapter.filter("");
-                    list.clearTextFilter();
+                    recyclerViewAdapter.filter("");
+                  //  list.clearTextFilter();
                 }
                 else {
-                    arrayAdapter.filter(s.toString());
+                    recyclerViewAdapter.filter(s.toString());
                 }
             }
 
@@ -206,6 +174,15 @@ public class Home extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        getData();
+        recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), R.layout.recycler_parent, notes, this);
+        list.setAdapter(recyclerViewAdapter);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
+        list.setLayoutManager(staggeredGridLayoutManager);
+        super.onResume();
+    }
+
+    private void getData() {
         String connectionsJSONString = sharedPreferences.getString("Name", null);
         Type type = new TypeToken< ArrayList < Notes >>() {}.getType();
         ArrayList<Notes> notes_temp = new Gson().fromJson(connectionsJSONString, type);
@@ -222,9 +199,6 @@ public class Home extends AppCompatActivity {
         }else{
             notes = notes_temp;
         }
-        arrayAdapter = new ListViewAdapter(getApplicationContext(), R.layout.layout, notes);
-        list.setAdapter(arrayAdapter);
-        super.onResume();
     }
 
     @Override
@@ -236,5 +210,35 @@ public class Home extends AppCompatActivity {
         }
         else
         finish();
+    }
+
+    @Override
+    public void onNoteClick(int position, View view) {
+        Intent intent = new Intent(getApplicationContext(), AddNote.class);
+        Pair[] pairs = new Pair[1];
+        LinearLayout tv = (LinearLayout) view;
+        pairs[0] = new Pair<View, String>(tv, "note_open");
+        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Home.this, pairs);
+        intent.putExtra("noteId", position);
+        startActivity(intent, options.toBundle());
+    }
+
+    @Override
+    public void onNoteLongClick(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(Home.this);
+        builder.setTitle("Delete");
+        builder.setMessage("Delete this note permanently?");
+        builder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        notes.remove(position);
+                        recyclerViewAdapter.notifyDataSetChanged();
+                        String connectionsJSONString = new Gson().toJson(notes);
+                        sharedPreferences.edit().putString("Name", connectionsJSONString).apply();
+                        Toast.makeText(Home.this, "Note deleted", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        builder.setNegativeButton("No", null);
+        builder.show();
     }
 }

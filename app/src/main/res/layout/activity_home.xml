@@ -64,10 +64,9 @@
             android:layout_weight="1"/>
     </LinearLayout>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
-        android:dividerHeight="8dp"
-        android:divider="@color/transparent"
+        android:scrollbars="vertical"
         android:layout_marginHorizontal="5dp"
         android:layout_marginVertical="10dp"
         android:layout_width="match_parent"
@@ -84,7 +83,8 @@
         android:transitionName="add_button"
         android:backgroundTint="@color/colorPrimary"
         android:layout_margin="20dp"
-        app:fabSize="auto" />
+        app:fabSize="auto"
+        android:contentDescription="FAB" />
 
 
 </RelativeLayout>

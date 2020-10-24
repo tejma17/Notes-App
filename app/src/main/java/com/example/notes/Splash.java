@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class Splash extends AppCompatActivity {
 
     ImageView imageView, red, green, red2, green2;
     TextView textView;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
         textView = findViewById(R.id.appname);
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Home.class));
                 finish();
             }
-        },2000);
+        },1500);
     }
 
 }
