@@ -1,8 +1,6 @@
 package com.example.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
@@ -34,6 +32,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNoteListener {
 
@@ -182,6 +182,7 @@ public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNot
         }else{
             notes = notes_temp;
         }
+        Collections.sort(notes, new SortByDate());
     }
 
     @Override
@@ -223,5 +224,15 @@ public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNot
                 });
         builder.setNegativeButton("No", null);
         builder.show();
+    }
+
+    class SortByDate implements Comparator<Notes>
+    {
+        // Used for sorting in ascending order of
+        // roll number
+        public int compare(Notes a, Notes b)
+        {
+            return b.getDescription().compareTo(a.getDescription());
+        }
     }
 }
