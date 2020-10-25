@@ -17,22 +17,24 @@ import android.widget.TextView;
 
 public class Splash extends AppCompatActivity {
 
-    ImageView imageView, red, green, red2, green2;
-    TextView textView;
-    Animation top, bottom;
-    SharedPreferences sharedPreferences;
+    private ImageView imageView, red, green, red2, green2;
+    private TextView textView;
+    private Animation top, bottom;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPreferences = getApplicationContext().getSharedPreferences("Notes", MODE_PRIVATE);
-        String theme = sharedPreferences.getString("MODE", "LIGHT");
-        if(theme.equals("NIGHT")) {
+        String theme = sharedPreferences.getString("MODE", "System Default");
+        if(theme.equals("Dark")) {
             Log.i("TAG", "CHANGE");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        }else{
+        }else if(theme.equals("Light")){
             Log.i("TAG", "CHANGE");
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_splash);

@@ -23,11 +23,11 @@ import java.util.Locale;
 
 public class AddNote extends AppCompatActivity {
 
-    EditText note;
-    Button done, back;
-    int noteId;
+    private EditText note;
+    private Button done, back;
+    private int noteId;
     private ArrayList<Notes> notes;
-    SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

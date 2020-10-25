@@ -24,6 +24,8 @@
         app:iconTint="@color/set_text"
         style="@style/Widget.AppCompat.Button.Borderless"
         android:fontFamily="@font/baloo"
+        android:transitionName="settings"
+        app:icon="@drawable/ic_round_settings_24"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginVertical="20dp"
@@ -34,9 +36,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginVertical="10dp"
-        android:layout_marginHorizontal="15dp"
-        android:layout_below="@id/textView" >
+        android:layout_toStartOf="@id/add"
+        android:layout_alignParentBottom="true"
+        android:layout_marginVertical="20dp"
+        android:layout_marginStart="10dp" >
 
         <EditText
             android:id="@+id/search"
@@ -46,7 +49,7 @@
             android:layout_weight="4"
             android:backgroundTint="@color/tint"
             android:background="@drawable/oval_back"
-            android:drawableLeft="@drawable/ic_round_search_24"
+            android:drawableStart="@drawable/ic_round_search_24"
             android:hint="Search your notes"
             android:drawablePadding="10dp" />
 
@@ -68,10 +71,11 @@
         android:id="@+id/list"
         android:scrollbars="vertical"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="10dp"
+        android:layout_marginVertical="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/search_arent" />
+        android:layout_above="@id/search_arent"
+        android:layout_below="@id/textView" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add"

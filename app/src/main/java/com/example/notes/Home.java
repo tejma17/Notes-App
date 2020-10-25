@@ -37,16 +37,14 @@ import java.util.ArrayList;
 
 public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNoteListener {
 
-    FloatingActionButton add;
-    SharedPreferences sharedPreferences;
+    private FloatingActionButton add;
+    private SharedPreferences sharedPreferences;
     private RecyclerView list;
-    private MaterialButton toggle;
-    EditText search;
-    LinearLayout search_layout;
-    TextView cancel;
-    private boolean isNight;
-    RecyclerViewAdapter recyclerViewAdapter;
-    public ArrayList<Notes> notes = new ArrayList<>();
+    private MaterialButton settings;
+    private EditText search;
+    private TextView cancel;
+    private RecyclerViewAdapter recyclerViewAdapter;
+    private ArrayList<Notes> notes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,48 +52,34 @@ public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNot
         setContentView(R.layout.activity_home);
 
         sharedPreferences = getApplicationContext().getSharedPreferences("Notes", MODE_PRIVATE);
-        if(sharedPreferences.getString("MODE", "LIGHT").equals("NIGHT")){
-            isNight = true;
-        }
 
         initElements();
         recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), R.layout.recycler_parent, notes, this);
         list.setAdapter(recyclerViewAdapter);
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL);
         list.setLayoutManager(staggeredGridLayoutManager);
-
-        if(!isNight){
-            toggle.setIconResource(R.drawable.ic_round_bedtime_24);
-        }else{
-            toggle.setIconResource(R.drawable.ic_round_wb_sunny_24);
-        }
-
+        
         search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus) {
                     cancel.setVisibility(View.VISIBLE);
+                    add.setVisibility(View.GONE);
                 }
                 else {
                     cancel.setVisibility(View.GONE);
+                    add.setVisibility(View.VISIBLE);
                 }
             }
         });
 
-        toggle.setOnClickListener(new View.OnClickListener() {
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!isNight) {
-                    toggle.setIconResource(R.drawable.ic_round_wb_sunny_24);
-                    sharedPreferences.edit().putString("MODE", "NIGHT").apply();
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    isNight = true;
-                } else {
-                    toggle.setIconResource(R.drawable.ic_round_bedtime_24);
-                    sharedPreferences.edit().putString("MODE", "LIGHT").apply();
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    isNight = false;
-                }
+                Pair[] pairs = new Pair[1];
+                pairs[0] = new Pair<View, String>(settings, "settings");
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(Home.this, pairs);
+                startActivity(new Intent(getApplicationContext(), Settings.class), options.toBundle());
             }
         });
 
@@ -148,8 +132,7 @@ public class Home extends AppCompatActivity implements RecyclerViewAdapter.onNot
     private void initElements() {
         add = findViewById(R.id.add);
         list = findViewById(R.id.list);
-        toggle = findViewById(R.id.mode);
-        search_layout = findViewById(R.id.search_arent);
+        settings = findViewById(R.id.mode);
         search = findViewById(R.id.search);
         cancel = findViewById(R.id.cancel);
     }
