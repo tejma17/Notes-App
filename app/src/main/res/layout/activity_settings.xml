@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:transitionName="settings"
+    android:background="@color/back"
+    tools:context="com.tejma.notes.Settings">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/back"
+        android:layout_width="50dp"
+        app:iconTint="@color/set_text"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        android:fontFamily="@font/baloo"
+        app:icon="@drawable/ic_round_arrow_back_24"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:layout_marginHorizontal="5dp"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_toEndOf="@id/back"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/baloo"
+        android:text="Settings"
+        android:textColor="@color/set_text"
+        android:textSize="29sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/settingView"
+        android:scrollbars="vertical"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/textView"
+        android:layout_above="@id/version"/>
+
+    <TextView
+        android:id="@+id/version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="20dp"
+        android:text="v 1.1"
+        android:textSize="15sp"
+        android:textColor="@color/set_text"
+        android:fontFamily="@font/convergence"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

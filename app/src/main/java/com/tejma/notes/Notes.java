@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.tejma.notes;
 
 public class Notes {
     private String name;

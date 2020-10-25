@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.tejma.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -13,6 +13,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.notes.R;
 
 
 public class Splash extends AppCompatActivity {

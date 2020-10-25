@@ -1,4 +1,4 @@
-package com.example.notes;
+package com.tejma.notes;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.transition.Explode;
@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.notes.R;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
