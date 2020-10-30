@@ -18,10 +18,6 @@ import com.example.notes.R;
 
 
 public class Splash extends AppCompatActivity {
-
-    private ImageView imageView, red, green, red2, green2;
-    private TextView textView;
-    private Animation top, bottom;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -38,33 +34,11 @@ public class Splash extends AppCompatActivity {
         }else{
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
         }
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_splash);
-        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
 
-        textView = findViewById(R.id.appname);
-        imageView = findViewById(R.id.logo);
-        red = findViewById(R.id.redline);
-        green = findViewById(R.id.greenline);
-        green2 = findViewById(R.id.greenbottom);
-        red2 = findViewById(R.id.redbottom);
+        Intent intent = new Intent(Splash.this,Home.class);
+        startActivity(intent);
+        finish();
 
-        top = AnimationUtils.loadAnimation(this, R.anim.top_animation);
-        bottom = AnimationUtils.loadAnimation(this, R.anim.bot_animation);
-
-        imageView.animate().alpha(1).setDuration(1000);
-        red.setAnimation(top);
-        green.setAnimation(top);
-        red2.setAnimation(bottom);
-        green2.setAnimation(bottom);
-
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(getApplicationContext(), Home.class));
-                finish();
-            }
-        },1500);
     }
 
 }

@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -97,6 +99,10 @@ public class Settings extends AppCompatActivity implements RecyclerViewAdapter.o
                 demo.get(position).setDescription(font);
                 recyclerViewAdapter.notifyDataSetChanged();
             }).show();
+        }
+        if(position == 2){
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://notes-7.flycricket.io/privacy.html"));
+            startActivity(browserIntent);
         }
     }
 

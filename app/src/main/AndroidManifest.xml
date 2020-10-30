@@ -8,10 +8,11 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.tejma.notes.Settings"></activity>
+        <activity android:name="com.tejma.notes.Settings"/>
         <activity android:name="com.tejma.notes.AddNote" />
         <activity android:name="com.tejma.notes.Home" />
-        <activity android:name="com.tejma.notes.Splash">
+        <activity android:name="com.tejma.notes.Splash"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
